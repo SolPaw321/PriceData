@@ -1,5 +1,6 @@
 import pandas as pd
-from ..io.loader import DataLoader, DataConfig, ClientConfig
+from pricedata.io.loader import DataLoader, DataConfig, ClientConfig
+from pricedata.transforms.candles import to_heikin_ashi
 
 
 class Data:
@@ -16,10 +17,29 @@ class Data:
     @property
     def df(self) -> pd.DataFrame:
         if self._df is None:
-            raise RuntimeError("Call .load() first")
+            raise RuntimeError("Call Data.load() first")
         return self._df
 
-    def with_candles(self) -> "Data":
+    def with_candles(self, *, kind: str = "standard", append: bool = False) -> "Data":
+        """
+        Transform candles to a specified kind.
+
+        Currently, supported kinds:
+        {supported_kinds}
+
+        Args:
+            kind (str): specified kind
+            append (bool): if true, append new columns: ha_open, ha_high, ha_low, ha_close. Otherwise, rewrite open,
+                        high, low, close. Default is true.
+        Return:
+            Data object.
+        """
+        if kind.lower() in ("heikin_ashi", "heiken ashi", "ha"):
+            self._df = to_heikin_ashi(self.df, append)
+        elif kind.lower() == "standard":
+            pass
+        else:
+            raise ValueError(f"Unknown candle type: {kind}")
         return self
 
     def with_features(self) -> "Data":

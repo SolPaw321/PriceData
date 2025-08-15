@@ -7,6 +7,11 @@ To install package use:
 pip install git+https://github.com/SolPaw321/PriceData.git
 ```
 
+Install TvDatafeed (not needed if you have your own OHLCV data)
+```commandline
+pip install --upgrade --no-cache-dir git+https://github.com/rongardF/tvdatafeed.git
+```
+
 This project also requires:
 ```commandline
 pip install numpy

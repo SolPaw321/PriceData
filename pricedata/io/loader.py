@@ -34,7 +34,6 @@ class DataConfig:
     base_dir: Path
     index_name: str = "Date"
 
-
 @dataclass
 class ClientConfig:
     user_name: str | None = None

@@ -1,9 +1,14 @@
 import pandas as pd
+from pricedata.utils.dev_types.dev_types import ColumnTypeEnum, ColumnTypeSetEnum
 
 
 def to_heikin_ashi(df: pd.DataFrame, append: bool) -> pd.DataFrame:
     """
     Transform given candles to heikin ashi.
+
+    NOTE.:
+    The value of the heikin ashi candles depends on the initial candle. The values may vary depending on the number of
+    candles loaded.
 
     Args:
         df (pd.DataFrame): data for which candles are transformed
@@ -14,7 +19,7 @@ def to_heikin_ashi(df: pd.DataFrame, append: bool) -> pd.DataFrame:
 
     """
     # check for all required columns
-    required = {"open", "high", "low", "close"}
+    required = set(ColumnTypeSetEnum.OHLC.value)
     missing = required - set(df.columns)
     if missing:
         print(f"Missing columns for HEIKIN ASHI: {sorted(missing)}. The kind of candles has not been changed.")
@@ -23,14 +28,18 @@ def to_heikin_ashi(df: pd.DataFrame, append: bool) -> pd.DataFrame:
     data_copy = df.copy()
 
     # calculate ha candles
-    data_copy["ha_close"] = (data_copy["open"] + data_copy["high"] + data_copy["low"] + data_copy["close"]) / 4.0
-    data_copy["ha_open"] = data_copy["open"]
-    data_copy.loc[data_copy.index[1:], "ha_open"] = (
-        (data_copy["ha_open"].shift(1) + data_copy["ha_close"]
-         .shift(1)) / 2.0).iloc[1:]
-    data_copy["ha_high"] = data_copy[["high", "ha_open", "ha_close"]].max(axis=1)
-    data_copy["ha_low"] = data_copy[["low", "ha_open", "ha_close"]].min(axis=1)
+    data_copy[ColumnTypeEnum.CLOSE_HA] = data_copy[ColumnTypeSetEnum.OHLC.value].sum(axis=1) / 4.0
+
+    data_copy[ColumnTypeEnum.OPEN_HA] = data_copy[ColumnTypeEnum.OPEN]
+    data_copy.loc[data_copy.index[1:], ColumnTypeEnum.OPEN_HA] = (
+                                            data_copy[ColumnTypeSetEnum.OC_HA.value].sum(axis=1).shift(1) / 2.0).iloc[1:]
+
+    data_copy[ColumnTypeEnum.HIGH_HA] = data_copy[
+        [ColumnTypeEnum.HIGH, *ColumnTypeSetEnum.OC_HA.value]].max(axis=1)
+
+    data_copy[ColumnTypeEnum.LOW_HA] = data_copy[
+        [ColumnTypeEnum.LOW, *ColumnTypeSetEnum.OC_HA.value]].min(axis=1)
 
     if not append:
-        data_copy[["open", "high", "low", "close"]] = data_copy[["ha_open", "ha_high", "ha_low", "ha_close"]]
+        data_copy[ColumnTypeSetEnum.OHLC.value] = data_copy[ColumnTypeSetEnum.OHLC_HA.value]
     return data_copy

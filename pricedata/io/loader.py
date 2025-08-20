@@ -10,6 +10,8 @@ except ModuleNotFoundError as e:
     # even if TvDatafeed is not installed, you can still ise reading data from a csv file
     TvDatafeed = object
 
+
+    @dataclass(slots=True)
     class Interval:
         in_1_min = "1"
         in_3_min = "3"
@@ -26,7 +28,7 @@ except ModuleNotFoundError as e:
         in_monthly = "1M"
 
 
-@dataclass
+@dataclass(slots=True)
 class DataConfig:
     symbol: str
     interval: str
@@ -34,13 +36,14 @@ class DataConfig:
     base_dir: Path
     index_name: str = "Date"
 
-@dataclass
+
+@dataclass(slots=True)
 class ClientConfig:
     user_name: str | None = None
     password: str | None = None
 
 
-@dataclass
+@dataclass(slots=True)
 class DataLoader:
     client: TvDatafeed | None = None
 
@@ -78,7 +81,7 @@ class DataLoader:
             df.index.name = cfg.index_name
             return self._normalize_df(df)
 
-        # if given path do not exist, then fetch data from trading view and save into given path
+        # if a given path does not exist, then fetch data from trading view and save into a given path
         df = self._fetch_from_tv(cfg, client_cfg)
         p.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(p, index=True, index_label=cfg.index_name)
@@ -237,17 +240,6 @@ class DataLoader:
 
         # normalize columns names
         df_copy.columns = [str(c).lower() for c in df_copy.columns]
-
-        # minimum required set of columns
-        # required = {"open", "high", "low", "close", "volume"}
-        # missing = required - set(df_copy.columns)
-        # for m in missing:
-        #     df_copy[m] = pd.NA
-
-        # sort columns
-        # preferred_order = ["open", "high", "low", "close", "volume"]
-        # others = [c for c in df_copy.columns if c not in preferred_order]
-        # df_copy = df_copy[preferred_order + others]
 
         # remove duplicated index and sort index
         df_copy = df_copy[~df_copy.index.duplicated(keep="last")].sort_index()

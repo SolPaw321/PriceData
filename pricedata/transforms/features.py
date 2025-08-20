@@ -101,5 +101,5 @@ def add_log_return(df: pd.DataFrame, *, spec: ReturnSpec):
     for src in spec.sources:
         ret_col_name = ColumnTypeEnum.LOG_RETURN_ + src
         series = df[src]
-        df[ret_col_name] = np.log(series / series.shift(1)).filna(0.0)
+        df[ret_col_name] = np.log(series / series.shift(1)).fillna(0.0)
 

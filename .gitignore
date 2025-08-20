@@ -210,5 +210,14 @@ __marimo__/
 # git
 .idea/
 
+# Sphinx
+docs/_build
+docs/**/.doctrees/
+docs/**/_autosummary/
+*.pyc
+__pycache__/
+Thumbs.db
+.DS_Store
+
 # user
 data/

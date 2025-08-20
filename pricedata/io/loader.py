@@ -30,6 +30,9 @@ except ModuleNotFoundError as e:
 
 @dataclass(slots=True)
 class DataConfig:
+    """
+    Data configuration settings.
+    """
     symbol: str
     interval: str
     n_bars: int
@@ -39,12 +42,18 @@ class DataConfig:
 
 @dataclass(slots=True)
 class ClientConfig:
+    """
+    Client configuration settings.
+    """
     user_name: str | None = None
     password: str | None = None
 
 
 @dataclass(slots=True)
 class DataLoader:
+    """
+    The data loader class.
+    """
     client: TvDatafeed | None = None
 
     @staticmethod

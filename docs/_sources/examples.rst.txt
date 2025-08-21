@@ -4,6 +4,14 @@ examples package
 Submodules
 ----------
 
+examples.00\_basic\_usage module
+--------------------------------
+
+.. automodule:: examples.00_basic_usage
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 examples.01\_downloading\_data module
 -------------------------------------
 

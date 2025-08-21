@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pricedata.core package &mdash; PriceData 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1dd76d02"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PriceData
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">pricedata.core package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pricedata.core.dataset">pricedata.core.dataset module</a><ul>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data"><code class="docutils literal notranslate"><span class="pre">Data</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.df"><code class="docutils literal notranslate"><span class="pre">Data.df</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.drop_columns"><code class="docutils literal notranslate"><span class="pre">Data.drop_columns()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.load"><code class="docutils literal notranslate"><span class="pre">Data.load()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.save"><code class="docutils literal notranslate"><span class="pre">Data.save()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.with_candles"><code class="docutils literal notranslate"><span class="pre">Data.with_candles()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.with_features"><code class="docutils literal notranslate"><span class="pre">Data.with_features()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.core.dataset.Data.with_states"><code class="docutils literal notranslate"><span class="pre">Data.with_states()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pricedata.core">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PriceData</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pricedata.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pricedata.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pricedata-core-package">
+<h1>pricedata.core package<a class="headerlink" href="#pricedata-core-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pricedata.core.dataset">
+<span id="pricedata-core-dataset-module"></span><h2>pricedata.core.dataset module<a class="headerlink" href="#module-pricedata.core.dataset" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.core.dataset.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricedata.io.html#pricedata.io.loader.DataConfig" title="pricedata.io.loader.DataConfig"><span class="pre">DataConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricedata.io.html#pricedata.io.loader.ClientConfig" title="pricedata.io.loader.ClientConfig"><span class="pre">ClientConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricedata.io.html#pricedata.io.loader.DataLoader" title="pricedata.io.loader.DataLoader"><span class="pre">DataLoader</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The main object to operate on the price data.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.df">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">df</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#pricedata.core.dataset.Data.df" title="Link to this definition"></a></dt>
+<dd><p>Get price data as DataFrame.</p>
+<dl class="simple">
+<dt>Return:</dt><dd><p>The price data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.drop_columns">
+<span class="sig-name descname"><span class="pre">drop_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.DropColumnsSpec" title="pricedata.utils.dev_types.spec.spec.DropColumnsSpec"><span class="pre">DropColumnsSpec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.drop_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.drop_columns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pricedata.core.dataset.Data" title="pricedata.core.dataset.Data"><span class="pre">Data</span></a></span></span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.load" title="Link to this definition"></a></dt>
+<dd><p>Download and save data fom TradingView via tvDatafeed or load from file.</p>
+<p>Specify the save and read path in DataConfig.</p>
+<dl class="simple">
+<dt>Return:</dt><dd><p>Self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.save" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.with_candles">
+<span class="sig-name descname"><span class="pre">with_candles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'standard'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pricedata.core.dataset.Data" title="pricedata.core.dataset.Data"><span class="pre">Data</span></a></span></span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.with_candles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.with_candles" title="Link to this definition"></a></dt>
+<dd><p>Transform candles to a specified kind.</p>
+<p>Currently, supported kinds:
+heiken ashi, standard</p>
+<dl>
+<dt>Args:</dt><dd><p>kind (str): specified kind
+append (bool): if true, append new columns: ha_open, ha_high, ha_low, ha_close. Otherwise, rewrite open,</p>
+<blockquote>
+<div><p>high, low, close. Default is true.</p>
+</div></blockquote>
+</dd>
+<dt>Return:</dt><dd><p>Data object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.with_features">
+<span class="sig-name descname"><span class="pre">with_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.OHLCSpec" title="pricedata.utils.dev_types.spec.spec.OHLCSpec"><span class="pre">OHLCSpec</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.ReturnSpec" title="pricedata.utils.dev_types.spec.spec.ReturnSpec"><span class="pre">ReturnSpec</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pricedata.core.dataset.Data" title="pricedata.core.dataset.Data"><span class="pre">Data</span></a></span></span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.with_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.with_features" title="Link to this definition"></a></dt>
+<dd><p>Allows you to add columns such as:
+OHLC4, HLC3, return, logarithmic return</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.core.dataset.Data.with_states">
+<span class="sig-name descname"><span class="pre">with_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pricedata.core.dataset.Data" title="pricedata.core.dataset.Data"><span class="pre">Data</span></a></span></span><a class="reference internal" href="_modules/pricedata/core/dataset.html#Data.with_states"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.core.dataset.Data.with_states" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pricedata.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pricedata.core" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SolPaw321.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

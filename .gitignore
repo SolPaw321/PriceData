@@ -69,7 +69,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+sphinx/_build/
 
 # PyBuilder
 .pybuilder/
@@ -211,9 +211,9 @@ __marimo__/
 .idea/
 
 # Sphinx
-docs/_build
-docs/**/.doctrees/
-docs/**/_autosummary/
+sphinx/_build
+sphinx/**/.doctrees/
+sphinx/**/_autosummary/
 *.pyc
 __pycache__/
 Thumbs.db

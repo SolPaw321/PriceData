@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pricedata.core.dataset &mdash; PriceData 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PriceData
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PriceData</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pricedata.core.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pricedata.core.dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pricedata.io.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">DataConfig</span><span class="p">,</span> <span class="n">ClientConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pricedata.transforms.candles</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_heikin_ashi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pricedata.transforms.features</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pricedata.utils.dev_types.spec.spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">OHLCSpec</span><span class="p">,</span> <span class="n">DropColumnsSpec</span><span class="p">,</span> <span class="n">ReturnSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pricedata.utils.dev_types.dev_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTypeEnum</span>
+
+
+<div class="viewcode-block" id="Data">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Data</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The main object to operate on the price data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_cfg</span><span class="p">:</span> <span class="n">DataConfig</span><span class="p">,</span> <span class="n">client_cfg</span><span class="p">:</span> <span class="n">ClientConfig</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Setting initialize parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_cfg (DataConfig): contextual parameters</span>
+<span class="sd">            client_cfg (ClientConfig): client username and password</span>
+<span class="sd">            loader (DataLoader): price data loader object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_cfg</span> <span class="o">=</span> <span class="n">data_cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_cfg</span> <span class="o">=</span> <span class="n">client_cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span> <span class="o">=</span> <span class="n">loader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_handler</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">OHLC4</span><span class="p">:</span> <span class="n">add_ohlc4</span><span class="p">,</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">HLC3</span><span class="p">:</span> <span class="n">add_hlc3</span><span class="p">,</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">HLCC4</span><span class="p">:</span> <span class="n">add_hlcc4</span><span class="p">,</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">HL2</span><span class="p">:</span> <span class="n">add_hl2</span><span class="p">,</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">RETURN</span><span class="p">:</span> <span class="n">add_return</span><span class="p">,</span>
+            <span class="n">ColumnTypeEnum</span><span class="o">.</span><span class="n">LOG_RETURN</span><span class="p">:</span> <span class="n">add_log_return</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="Data.load">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.load">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Data&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download and save data fom TradingView via tvDatafeed or load from file.</span>
+
+<span class="sd">        Specify the save and read path in DataConfig.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            Self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span><span class="o">.</span><span class="n">load_or_fetch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get price data as DataFrame.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            The price data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Call Data.load() first&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span>
+
+<div class="viewcode-block" id="Data.with_candles">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.with_candles">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">with_candles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="n">append</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Data&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform candles to a specified kind.</span>
+
+<span class="sd">        Currently, supported kinds:</span>
+<span class="sd">        {supported_kinds}</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kind (str): specified kind</span>
+<span class="sd">            append (bool): if true, append new columns: ha_open, ha_high, ha_low, ha_close. Otherwise, rewrite open,</span>
+<span class="sd">                        high, low, close. Default is true.</span>
+<span class="sd">        Return:</span>
+<span class="sd">            Data object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;heikin_ashi&quot;</span><span class="p">,</span> <span class="s2">&quot;heiken ashi&quot;</span><span class="p">,</span> <span class="s2">&quot;ha&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">to_heikin_ashi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">append</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;standard&quot;</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown candle type: </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Data.with_features">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.with_features">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">with_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">OHLCSpec</span> <span class="o">|</span> <span class="n">ReturnSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Data&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allows you to add columns such as:</span>
+<span class="sd">        OHLC4, HLC3, return, logarithmic return</span>
+
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">feature_kind</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">feature_kinds</span><span class="p">:</span>
+            <span class="n">handler_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_handler</span><span class="p">[</span><span class="n">feature_kind</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">handler_</span><span class="p">:</span>
+                <span class="n">handler_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="n">spec</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Data.with_states">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.with_states">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">with_states</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Data&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Data.drop_columns">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.drop_columns">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">drop_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">DropColumnsSpec</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">cols</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Data.save">
+<a class="viewcode-back" href="../../../pricedata.core.html#pricedata.core.dataset.Data.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_cfg</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SolPaw321.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

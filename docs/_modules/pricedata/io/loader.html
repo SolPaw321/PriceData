@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pricedata.io.loader &mdash; PriceData 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PriceData
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PriceData</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pricedata.io.loader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pricedata.io.loader</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tvDatafeed</span><span class="w"> </span><span class="kn">import</span> <span class="n">TvDatafeed</span><span class="p">,</span> <span class="n">Interval</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># even if TvDatafeed is not installed, you can still ise reading data from a csv file</span>
+    <span class="n">TvDatafeed</span> <span class="o">=</span> <span class="nb">object</span>
+
+
+    <span class="nd">@dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Interval</span><span class="p">:</span>
+        <span class="n">in_1_min</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="n">in_3_min</span> <span class="o">=</span> <span class="s2">&quot;3&quot;</span>
+        <span class="n">in_5_min</span> <span class="o">=</span> <span class="s2">&quot;5&quot;</span>
+        <span class="n">in_15_min</span> <span class="o">=</span> <span class="s2">&quot;15&quot;</span>
+        <span class="n">in_30_min</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span>
+        <span class="n">in_45_min</span> <span class="o">=</span> <span class="s2">&quot;45&quot;</span>
+        <span class="n">in_1_hour</span> <span class="o">=</span> <span class="s2">&quot;60&quot;</span>
+        <span class="n">in_2_hour</span> <span class="o">=</span> <span class="s2">&quot;120&quot;</span>
+        <span class="n">in_3_hour</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span>
+        <span class="n">in_4_hour</span> <span class="o">=</span> <span class="s2">&quot;240&quot;</span>
+        <span class="n">in_daily</span> <span class="o">=</span> <span class="s2">&quot;1D&quot;</span>
+        <span class="n">in_weekly</span> <span class="o">=</span> <span class="s2">&quot;1W&quot;</span>
+        <span class="n">in_monthly</span> <span class="o">=</span> <span class="s2">&quot;1M&quot;</span>
+
+
+<div class="viewcode-block" id="DataConfig">
+<a class="viewcode-back" href="../../../pricedata.io.html#pricedata.io.loader.DataConfig">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Data configuration settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">interval</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">n_bars</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">base_dir</span><span class="p">:</span> <span class="n">Path</span>
+    <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Date&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ClientConfig">
+<a class="viewcode-back" href="../../../pricedata.io.html#pricedata.io.loader.ClientConfig">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClientConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Client configuration settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="DataLoader">
+<a class="viewcode-back" href="../../../pricedata.io.html#pricedata.io.loader.DataLoader">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataLoader</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data loader class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">TvDatafeed</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_csv_path</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">DataConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crate a path for saving data into csv file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg (DataConfig): data configuration settings</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            Path: the path to csv file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sym</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">/</span> <span class="n">sym</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">interval</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">n_bars</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DataLoader.load_or_fetch">
+<a class="viewcode-back" href="../../../pricedata.io.html#pricedata.io.loader.DataLoader.load_or_fetch">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_or_fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">DataConfig</span><span class="p">,</span> <span class="n">client_cfg</span><span class="p">:</span> <span class="n">ClientConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load data from given path or fetch data from TradingView via TvDatafeed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg (DataConfig): data configuration setting</span>
+<span class="sd">            client_cfg (ClientConfig): client configuration settings</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            pd.DataFrame: OHLCV standard japanese candlestick price data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_path</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># if a given path does not exist, then fetch data from trading view and save into a given path</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_from_tv</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">client_cfg</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_label</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.save">
+<a class="viewcode-back" href="../../../pricedata.io.html#pricedata.io.loader.DataLoader.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">DataConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_path</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_label</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_from_tv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">DataConfig</span><span class="p">,</span> <span class="n">client_cfg</span><span class="p">:</span> <span class="n">ClientConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download price data from TradingView via tvDatafeed in standard OHLCV japanese candlestick format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cfg (DataConfig): config dataclass</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            pd.DataFrame: the OHLCV price data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">TvDatafeed</span> <span class="o">|</span> <span class="nb">object</span> <span class="o">=</span> <span class="n">TvDatafeed</span><span class="p">(</span>
+                    <span class="n">username</span><span class="o">=</span><span class="n">client_cfg</span><span class="o">.</span><span class="n">user_name</span><span class="p">,</span>
+                    <span class="n">password</span><span class="o">=</span><span class="n">client_cfg</span><span class="o">.</span><span class="n">password</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">expectation</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Failed to create TvDatafeed client. &quot;</span>
+                    <span class="s2">&quot;Try to use TradingView account:&quot;</span>
+                    <span class="s2">&quot;client = Client(user_name=..., password=...)&quot;</span>
+                    <span class="s2">&quot;DataLoader(client=client)&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">expectation</span>
+
+        <span class="n">exchange</span><span class="p">,</span> <span class="n">ticker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_symbol</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="n">tv_interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_interval</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+
+        <span class="n">attempts</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">last_err</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">attempts</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_hist</span><span class="p">(</span>
+                    <span class="n">symbol</span><span class="o">=</span><span class="n">ticker</span><span class="p">,</span>
+                    <span class="n">exchange</span><span class="o">=</span><span class="n">exchange</span><span class="p">,</span>
+                    <span class="n">interval</span><span class="o">=</span><span class="n">tv_interval</span><span class="p">,</span>
+                    <span class="n">n_bars</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">n_bars</span><span class="p">,</span>
+                    <span class="n">fut_contract</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">extended_session</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;TradingView returned empty data. Please try again.&quot;</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index_name</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">index_name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">df</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">expectation</span><span class="p">:</span>
+                <span class="n">last_err</span> <span class="o">=</span> <span class="n">expectation</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+                <span class="n">delay</span> <span class="o">*=</span> <span class="mi">2</span>
+
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to retrieve data from TradingView for </span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">symbol</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">interval</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;after </span><span class="si">{</span><span class="n">attempts</span><span class="si">}</span><span class="s2"> attempts. Last error: </span><span class="si">{</span><span class="n">last_err</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_split_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split a symbol into exchange and ticker.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            symbol (str): symbol in format EXCHANGE:TICKER</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            Tuple of exchange and ticker name.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">symbol</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; do not contain &#39;:&#39;. Use &#39;EXCHANGE:TICKER&#39; format, eg. &#39;BINANCE:BTCUSDT&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">exchange</span><span class="p">,</span> <span class="n">ticker</span> <span class="o">=</span> <span class="n">symbol</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exchange</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ticker</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;. Use &#39;EXCHANGE:TICKER&#39; format, eg. &#39;BINANCE:BTCUSDT&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">exchange</span><span class="p">,</span> <span class="n">ticker</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_interval</span><span class="p">(</span><span class="n">interval_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map str interval into TvDatafeed.Interval.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">interval_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;1m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_1_minute</span><span class="p">,</span>
+            <span class="s2">&quot;3m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_3_minute</span><span class="p">,</span>
+            <span class="s2">&quot;5m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_5_minute</span><span class="p">,</span>
+            <span class="s2">&quot;15m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_15_minute</span><span class="p">,</span>
+            <span class="s2">&quot;30m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_30_minute</span><span class="p">,</span>
+            <span class="s2">&quot;45m&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_45_minute</span><span class="p">,</span>
+            <span class="s2">&quot;1h&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_1_hour</span><span class="p">,</span>
+            <span class="s2">&quot;2h&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_2_hour</span><span class="p">,</span>
+            <span class="s2">&quot;3h&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_3_hour</span><span class="p">,</span>
+            <span class="s2">&quot;4h&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_4_hour</span><span class="p">,</span>
+            <span class="s2">&quot;1d&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_daily</span><span class="p">,</span>
+            <span class="s2">&quot;1w&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_weekly</span><span class="p">,</span>
+            <span class="s2">&quot;1mth&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_monthly</span><span class="p">,</span>
+            <span class="s2">&quot;1mon&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_monthly</span><span class="p">,</span>
+            <span class="s2">&quot;1mo&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_monthly</span><span class="p">,</span>
+            <span class="s2">&quot;1m_&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_monthly</span><span class="p">,</span>
+            <span class="s2">&quot;1M&quot;</span><span class="p">:</span> <span class="n">Interval</span><span class="o">.</span><span class="n">in_monthly</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="s2">&quot;1d&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="s2">&quot;1w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">alias</span> <span class="ow">and</span> <span class="n">alias</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">alias</span><span class="p">[</span><span class="n">s</span><span class="p">]]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported interval: &#39;</span><span class="si">{</span><span class="n">interval_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Date&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Normalize data read from file or downloaded from TradingView.</span>
+
+<span class="sd">        Normalization contains:</span>
+<span class="sd">        -&gt; index of type pd.dDatatimeIndex</span>
+<span class="sd">        -&gt; columns names in lowercase</span>
+<span class="sd">        -&gt; remove duplicated indexes</span>
+<span class="sd">        -&gt; sort indexes</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame): read or downloaded data</span>
+<span class="sd">            index_name (str): preferred index name. Default is &quot;Date&quot;</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            Normalized data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># make sure that index is of type pf.DatatimeIndex</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">):</span>
+            <span class="c1"># try to find a column that can be a date index, otherwise try to convert index into pd.DatatimeIndex</span>
+            <span class="k">for</span> <span class="n">dt_col</span> <span class="ow">in</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">dt_col</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">):</span>
+                    <span class="n">df_copy</span><span class="p">[</span><span class="n">dt_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="n">dt_col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">dt_col</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># force UTC and index name</span>
+        <span class="k">if</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">)</span>
+        <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">index_name</span>
+
+        <span class="c1"># normalize columns names</span>
+        <span class="n">df_copy</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="c1"># remove duplicated index and sort index</span>
+        <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="p">[</span><span class="o">~</span><span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">df_copy</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SolPaw321.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

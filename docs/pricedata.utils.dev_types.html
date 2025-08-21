@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pricedata.utils.dev_types package &mdash; PriceData 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1dd76d02"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PriceData
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">pricedata.utils.dev_types package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pricedata.utils.dev_types.dev_types">pricedata.utils.dev_types.dev_types module</a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.CandleKind"><code class="docutils literal notranslate"><span class="pre">CandleKind</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.CandleKind.value"><code class="docutils literal notranslate"><span class="pre">CandleKind.value</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum"><code class="docutils literal notranslate"><span class="pre">CandleKindEnum</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum.HA"><code class="docutils literal notranslate"><span class="pre">CandleKindEnum.HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum.STANDARD"><code class="docutils literal notranslate"><span class="pre">CandleKindEnum.STANDARD</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnType"><code class="docutils literal notranslate"><span class="pre">ColumnType</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnType.value"><code class="docutils literal notranslate"><span class="pre">ColumnType.value</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.CLOSE</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.CLOSE_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HIGH</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HIGH_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HL2</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HL2_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HLC3</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HLC3_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HLCC4</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.HLCC4_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.LOG_RETURN</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN_"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.LOG_RETURN_</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.LOW</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.LOW_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.OHLC4</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.OHLC4_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.OPEN</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.OPEN_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.RETURN</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN_"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.RETURN_</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.SYMBOL"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.SYMBOL</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.VOLUME"><code class="docutils literal notranslate"><span class="pre">ColumnTypeEnum.VOLUME</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSet"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSet</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSet.value"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSet.value</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HL</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HLC</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HLCC</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HLCC_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HLC_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.HL_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OC_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.OC_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.OHLC</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC_HA"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.OHLC_HA</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OTHERS"><code class="docutils literal notranslate"><span class="pre">ColumnTypeSetEnum.OTHERS</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry"><code class="docutils literal notranslate"><span class="pre">Registry</span></code></a><ul>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry.register"><code class="docutils literal notranslate"><span class="pre">Registry.register()</span></code></a></li>
+<li><a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry.registered_keys"><code class="docutils literal notranslate"><span class="pre">Registry.registered_keys()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pricedata.utils.dev_types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PriceData</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pricedata.utils.dev_types package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pricedata.utils.dev_types.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pricedata-utils-dev-types-package">
+<h1>pricedata.utils.dev_types package<a class="headerlink" href="#pricedata-utils-dev-types-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pricedata.utils.dev_types.spec.html">pricedata.utils.dev_types.spec package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#module-pricedata.utils.dev_types.spec.spec">pricedata.utils.dev_types.spec.spec module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.DropColumnsSpec"><code class="docutils literal notranslate"><span class="pre">DropColumnsSpec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.DropColumnsSpec.cols"><code class="docutils literal notranslate"><span class="pre">DropColumnsSpec.cols</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.OHLCSpec"><code class="docutils literal notranslate"><span class="pre">OHLCSpec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.OHLCSpec.candle_kinds"><code class="docutils literal notranslate"><span class="pre">OHLCSpec.candle_kinds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.OHLCSpec.feature_kinds"><code class="docutils literal notranslate"><span class="pre">OHLCSpec.feature_kinds</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.ReturnSpec"><code class="docutils literal notranslate"><span class="pre">ReturnSpec</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.ReturnSpec.feature_kinds"><code class="docutils literal notranslate"><span class="pre">ReturnSpec.feature_kinds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#pricedata.utils.dev_types.spec.spec.ReturnSpec.sources"><code class="docutils literal notranslate"><span class="pre">ReturnSpec.sources</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pricedata.utils.dev_types.spec.html#module-pricedata.utils.dev_types.spec">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pricedata.utils.dev_types.dev_types">
+<span id="pricedata-utils-dev-types-dev-types-module"></span><h2>pricedata.utils.dev_types.dev_types module<a class="headerlink" href="#module-pricedata.utils.dev_types.dev_types" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.CandleKind">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">CandleKind</span></span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#CandleKind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.CandleKind" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry" title="pricedata.utils.dev_types.dev_types.Registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Registry</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.CandleKind.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.CandleKind.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.CandleKindEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">CandleKindEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#CandleKindEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>StrEnum for handling candle kinds.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.CandleKindEnum.HA">
+<span class="sig-name descname"><span class="pre">HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum.HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.CandleKindEnum.STANDARD">
+<span class="sig-name descname"><span class="pre">STANDARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'standard'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.CandleKindEnum.STANDARD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnType">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">ColumnType</span></span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#ColumnType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry" title="pricedata.utils.dev_types.dev_types.Registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Registry</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnType.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnType.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">ColumnTypeEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#ColumnTypeEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>StrEnum for handling every column name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE">
+<span class="sig-name descname"><span class="pre">CLOSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'close'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE_HA">
+<span class="sig-name descname"><span class="pre">CLOSE_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'close-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.CLOSE_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH">
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'high'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH_HA">
+<span class="sig-name descname"><span class="pre">HIGH_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'high-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HIGH_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2">
+<span class="sig-name descname"><span class="pre">HL2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hl2'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2_HA">
+<span class="sig-name descname"><span class="pre">HL2_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hl2-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HL2_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3">
+<span class="sig-name descname"><span class="pre">HLC3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hlc3'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3_HA">
+<span class="sig-name descname"><span class="pre">HLC3_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hlc3-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLC3_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4">
+<span class="sig-name descname"><span class="pre">HLCC4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hlcc4'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4_HA">
+<span class="sig-name descname"><span class="pre">HLCC4_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hlcc4-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.HLCC4_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN">
+<span class="sig-name descname"><span class="pre">LOG_RETURN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'log-return'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN_">
+<span class="sig-name descname"><span class="pre">LOG_RETURN_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'log-return-'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOG_RETURN_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW">
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'low'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW_HA">
+<span class="sig-name descname"><span class="pre">LOW_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'low-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.LOW_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4">
+<span class="sig-name descname"><span class="pre">OHLC4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ohlc4'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4_HA">
+<span class="sig-name descname"><span class="pre">OHLC4_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ohlc4-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OHLC4_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN">
+<span class="sig-name descname"><span class="pre">OPEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'open'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN_HA">
+<span class="sig-name descname"><span class="pre">OPEN_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'open-ha'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.OPEN_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN">
+<span class="sig-name descname"><span class="pre">RETURN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'return'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN_">
+<span class="sig-name descname"><span class="pre">RETURN_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'return-'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.RETURN_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.SYMBOL">
+<span class="sig-name descname"><span class="pre">SYMBOL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'symbol'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.SYMBOL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeEnum.VOLUME">
+<span class="sig-name descname"><span class="pre">VOLUME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'volume'</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeEnum.VOLUME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">ColumnTypeSet</span></span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#ColumnTypeSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSet" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pricedata.utils.dev_types.dev_types.Registry" title="pricedata.utils.dev_types.dev_types.Registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Registry</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSet.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSet.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">ColumnTypeSetEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#ColumnTypeSetEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum for handling every set of specific columns names.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL">
+<span class="sig-name descname"><span class="pre">HL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high',</span> <span class="pre">'low']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC">
+<span class="sig-name descname"><span class="pre">HLC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high',</span> <span class="pre">'low',</span> <span class="pre">'close']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC">
+<span class="sig-name descname"><span class="pre">HLCC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high',</span> <span class="pre">'low',</span> <span class="pre">'close',</span> <span class="pre">'close']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC_HA">
+<span class="sig-name descname"><span class="pre">HLCC_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high-ha',</span> <span class="pre">'low-ha',</span> <span class="pre">'close-ha',</span> <span class="pre">'close-ha']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLCC_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC_HA">
+<span class="sig-name descname"><span class="pre">HLC_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high-ha',</span> <span class="pre">'low-ha',</span> <span class="pre">'close-ha']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HLC_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL_HA">
+<span class="sig-name descname"><span class="pre">HL_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['high-ha',</span> <span class="pre">'low-ha']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.HL_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OC_HA">
+<span class="sig-name descname"><span class="pre">OC_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['open-ha',</span> <span class="pre">'close-ha']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OC_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC">
+<span class="sig-name descname"><span class="pre">OHLC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['open',</span> <span class="pre">'high',</span> <span class="pre">'low',</span> <span class="pre">'close']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC_HA">
+<span class="sig-name descname"><span class="pre">OHLC_HA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['open-ha',</span> <span class="pre">'high-ha',</span> <span class="pre">'low-ha',</span> <span class="pre">'close-ha']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OHLC_HA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OTHERS">
+<span class="sig-name descname"><span class="pre">OTHERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['volume',</span> <span class="pre">'symbol']</span></em><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.ColumnTypeSetEnum.OTHERS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.Registry">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pricedata.utils.dev_types.dev_types.</span></span><span class="sig-name descname"><span class="pre">Registry</span></span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#Registry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.Registry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class using for register allowed input types aliases.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.Registry.register">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Enum</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">StrEnum</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#Registry.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.Registry.register" title="Link to this definition"></a></dt>
+<dd><p>Assign real value to aliases.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>value (Enums): real value
+aliases (str): aliases</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pricedata.utils.dev_types.dev_types.Registry.registered_keys">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registered_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pricedata/utils/dev_types/dev_types.html#Registry.registered_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pricedata.utils.dev_types.dev_types.Registry.registered_keys" title="Link to this definition"></a></dt>
+<dd><p>Return all registered aliases.</p>
+<dl class="simple">
+<dt>Return:</dt><dd><p>All registered aliases</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pricedata.utils.dev_types">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pricedata.utils.dev_types" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SolPaw321.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
